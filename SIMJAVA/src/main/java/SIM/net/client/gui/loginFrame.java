@@ -184,7 +184,19 @@ public class loginFrame
           for (String contactData : contacts_array) {
             loginFrame.listModel.addElement(contactData);
             
-          }
+          }      
+          Executors.newSingleThreadExecutor().execute(new Runnable() {
+        	    @Override
+        	    public void run() {
+        	    	try {
+						SIM.net.client.networking.audioHandler.main(new String[3]);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        	    }
+        	});
+          
           Executors.newSingleThreadExecutor().execute(new Runnable()
           {
             public void run() {
