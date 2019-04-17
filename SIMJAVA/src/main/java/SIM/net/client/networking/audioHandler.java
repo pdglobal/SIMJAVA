@@ -40,9 +40,9 @@ implements HttpHandler {
         public void handle(HttpExchange he) throws IOException {
             URI requestedUri = he.getRequestURI();
             String query = requestedUri.getRawQuery();
-            he.sendResponseHeaders(200, audiodata.length());
+            he.sendResponseHeaders(200, audiodata.replace("\n", "").replace("\r", "").length());
             OutputStream os = he.getResponseBody();
-            os.write(audiodata.toString().getBytes());
+            os.write(audiodata.toString().replace("\n", "").replace("\r", "").getBytes());
             os.close();
         }
     }
