@@ -40,16 +40,12 @@ public class audioServer {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int CHUNK_SIZE = 1024;
             byte[] data = new byte[microphone.getBufferSize() / 5];
-            microphone.start();
-            block2 : do {
-                int bytesRead = 0;
-                out.reset();
-                do {
-                    if (bytesRead >= 1024) continue block2;
-                    int numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
-                    System.out.println(bytesRead += numBytesRead);
-                    out.write(data, 0, numBytesRead);
-                    byte[] audioData = out.toByteArray();
+            microphone.start();             
+            int bytesRead = 0;    
+            do {
+                    
+					if (bytesRead >= 3072) {
+						byte[] audioData = out.toByteArray();
                     String base64img = Base64.encode(audioData);
                     String audioclip;
                     if (key.length > 9999) {
@@ -58,8 +54,16 @@ public class audioServer {
                     	audioclip = base64img;
                     }
                     audioHandler.setdata(audioclip);
-                } while (true);
-            } while (true);
+                    bytesRead = 0;
+                    
+                } else {
+                	int numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
+                    System.out.println(bytesRead += numBytesRead);
+                    out.write(data, 0, numBytesRead);
+                }
+                	
+                }
+                    while (true);
     }
 }
 
