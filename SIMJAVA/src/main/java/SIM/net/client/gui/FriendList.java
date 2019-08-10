@@ -73,7 +73,7 @@ public class FriendList
           String usrid = "";
           
           try {
-            usrid = URLSrc.getURLSource("https://intranet.pdglobal.net/?sid=getusrid&usr=" + FriendList.list.getSelectedValue().toString());
+            usrid = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=getusrid&usr=" + FriendList.list.getSelectedValue().toString());
           }
           catch (IOException e) {
             e.printStackTrace();

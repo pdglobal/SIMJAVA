@@ -311,7 +311,7 @@ public void sendMessage()
     if (!this.kfbp[0].equals("0")) {
       text = "0x" + crypt.inject(text, this.kfbp);
     }
-    String send = URLSrc.getURLSource("https://intranet.pdglobal.net/?sid=sendmsg&to=" + this.baseTitle.split("\\|")[0].toString().trim() + "&msg=" + URLEncoder.encode(text, "UTF-8").trim() + "&session=" + loginFrame.authsession.replaceAll("0x", ""));
+    String send = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=sendmsg&to=" + this.baseTitle.split("\\|")[0].toString().trim() + "&msg=" + URLEncoder.encode(text, "UTF-8").trim() + "&session=" + loginFrame.authsession.replaceAll("0x", ""));
     System.out.println(send);
     
     this.chatBox.setText("");

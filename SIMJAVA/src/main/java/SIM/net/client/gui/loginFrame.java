@@ -104,7 +104,7 @@ public class loginFrame
     
     Image image = null;
     try {
-        URL url = new URL("https://intranet.pdglobal.net/?sid=files_go&ID=logopng");
+        URL url = new URL("https://intranet.pdglobal.app/?sid=files_go&ID=logopng");
         image = ImageIO.read(url);
     } catch (IOException e) {
     	e.printStackTrace();
@@ -128,7 +128,7 @@ public class loginFrame
         loginFrame.username = textField.getText();
         String password = passwordField.getText();
         try {
-          ret = URLSrc.getURLSource("https://intranet.pdglobal.net/?sid=login&usr=" + URLEncoder.encode(loginFrame.username, "UTF-8").trim() + "&pwd=" + URLEncoder.encode(password, "UTF-8").trim());
+          ret = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=login&usr=" + URLEncoder.encode(loginFrame.username, "UTF-8").trim() + "&pwd=" + URLEncoder.encode(password, "UTF-8").trim());
         }
         catch (IOException ev) {
           ev.printStackTrace();
@@ -170,9 +170,9 @@ public class loginFrame
         }
         
         if (loginFrame.go == 1) {
-          System.out.print("https://intranet.pdglobal.net/?sid=contactslist&session=" + loginFrame.authsession);
+          System.out.print("https://intranet.pdglobal.app/?sid=contactslist&session=" + loginFrame.authsession);
           try {
-            contacts = URLSrc.getURLSource("https://intranet.pdglobal.net/?sid=contactslist&session=" + 
+            contacts = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=contactslist&session=" + 
               loginFrame.authsession.replaceAll("0x", ""));
           }
           catch (IOException ec) {
@@ -189,7 +189,7 @@ public class loginFrame
         	    @Override
         	    public void run() {
         	    	try {
-						SIM.net.client.networking.audioHandler.main(new String[3]);
+						//SIM.net.client.networking.audioHandler.main(new String[3]);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -234,7 +234,7 @@ public class loginFrame
   }
   
   public void checkmsgs() throws IOException {
-	    String send = URLSrc.getURLSource("https://intranet.pdglobal.net/?sid=getmsgs&session=" + authsession.replaceAll("0x", ""));
+	    String send = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=getmsgs&session=" + authsession.replaceAll("0x", ""));
 	    String[] msgs = send.split("!");
 	    for (String msg : msgs) {
 	      if (msg.length() > 2) {
@@ -242,7 +242,7 @@ public class loginFrame
 	        String[] array = msg.split("`");
 	        String usrid = "";
 	        try {
-	          usrid = URLSrc.getURLSource("https://intranet.pdglobal.net/?sid=getusrid&usr=" + array[0]);
+	          usrid = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=getusrid&usr=" + array[0]);
 	        }
 	        catch (IOException e) {
 	          e.printStackTrace();
