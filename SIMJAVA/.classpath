@@ -4,5 +4,22 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_221"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webcam-capture-0.3.10-dist"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.12.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient5-5.0-beta4.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient5-cache-5.0-beta4.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient5-fluent-5.0-beta4.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient5-testing-5.0-beta4.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient5-win-5.0-beta4.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore5-5.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore5-h2-5.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore5-reactive-5.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore5-testing-5.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/jna-5.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-platform-5.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-streams-1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
