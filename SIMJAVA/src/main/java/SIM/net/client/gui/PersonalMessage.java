@@ -294,7 +294,8 @@ public void sendMessage()
   throws IOException
 {
   this.chatBox.setEnabled(false);
-  String text = this.chatBox.getText().trim().substring(0, this.chatBox.getText().length());
+  String msgtext = this.chatBox.getText().trim();
+  String text = msgtext.substring(0, msgtext.length());
   if (text.isEmpty())
   {
     JOptionPane.showMessageDialog(null, 

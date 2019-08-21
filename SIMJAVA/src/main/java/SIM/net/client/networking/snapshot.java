@@ -2,6 +2,8 @@ package SIM.net.client.networking;
 
 import com.github.sarxos.webcam.Webcam;
 
+import DARTIS.construct;
+import DARTIS.keys;
 import SIM.net.client.networking.stream;
 
 import java.awt.Graphics2D;
@@ -14,9 +16,11 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class snapshot {
-
+	public static boolean encryptcam = false;
+	public static String[] key = construct.load(keys.generate());
 	public static BufferedImage webcamimg;
-	
+	public static int operations = 0;
+	public static String hz = "0";
 	public static void main(String[] args) throws IOException {
 		
 		// get default webcam and open it
@@ -24,13 +28,23 @@ public class snapshot {
 		webcam.open();
 
 		mirror.main(null);
+		long startTime = System.currentTimeMillis();
+
 		while (true) {
 		// get image
 		BufferedImage image = webcam.getImage();
 		mirror.setLblNewLabel(new ImageIcon(resize(image, 434, 261)));
 		// save image to memory
 		webcamimg = image;
-		stream.uploadcam(stream.compressString(stream.imgToBase64String(webcamimg, "jpg")));
+		if (encryptcam == true) {
+			stream.uploadcam(stream.compressString(DARTIS.crypt.inject(stream.imgToBase64String(webcamimg, "jpg"), key)));
+			operations += 1;
+		} else {
+			stream.uploadcam(stream.compressString(stream.imgToBase64String(webcamimg, "jpg")));
+			operations += 1;
+		}
+		hz = String.valueOf((operations)/((System.currentTimeMillis()-startTime)/1000));
+		System.out.println(hz+" FPS");
 	}
 }
 	
