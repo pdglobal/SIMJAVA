@@ -63,7 +63,7 @@ public class camview {
 	 */
 	private void initialize() {
 		frmWebcamViewer = new JFrame();
-		frmWebcamViewer.setTitle("WEBCAM VIEWER " + camview.user);
+		frmWebcamViewer.setTitle("WEBCAM VIEWER - " + camview.user.toUpperCase());
 		frmWebcamViewer.setBounds(100, 100, 450, 300);
 		frmWebcamViewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmWebcamViewer.getContentPane().setLayout(null);
