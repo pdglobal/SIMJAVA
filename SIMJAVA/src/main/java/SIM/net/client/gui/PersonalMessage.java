@@ -66,6 +66,7 @@ import SIM.net.client.FileWriter;
 import SIM.net.client.Timer;
 import SIM.net.client.networking.PacketHeaders;
 import SIM.net.client.networking.PacketManager;
+import SIM.net.client.networking.snapshot;
 public class PersonalMessage
 extends JFrame
 implements ComponentListener, KeyListener, FocusListener, HyperlinkListener, WindowFocusListener, DropTargetListener, DragSourceListener, DragGestureListener, ActionListener, WindowListener
@@ -179,7 +180,7 @@ public PersonalMessage(Client client)
   
   this.transferButton.setBounds(getWidth() - 36, 279, 20, 20);
   this.transferButton.setIcon(Constants.transferIcon);
-  this.transferButton.setToolTipText("File Transfer");
+  this.transferButton.setToolTipText("Broadcast Webcam");
   
   this.fontButton.addActionListener(this);
   this.emoticonButton.addActionListener(this);
@@ -513,7 +514,20 @@ public void actionPerformed(ActionEvent e)
   else if (e.getSource() != this.addButton)
   {
     if (e.getSource() == this.transferButton) {
-      this.fileTransfer.setVisible(true);
+      if (!snapshot.open) {
+    	  Thread thread = new Thread(){
+    		    public void run(){
+    		      try {
+					snapshot.main(new String[3]);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    		    }
+    		  };
+
+    		  thread.start();
+      }
     }
   }
 }

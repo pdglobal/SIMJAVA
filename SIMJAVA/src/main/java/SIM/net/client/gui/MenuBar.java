@@ -1,6 +1,8 @@
 package SIM.net.client.gui;
 
 import DARTIS.construct;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
+
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -98,7 +102,8 @@ public class MenuBar implements java.awt.event.ActionListener
     mntmWebsite.addActionListener(this);
   }
   
-  public void actionPerformed(ActionEvent e)
+  @SuppressWarnings("deprecation")
+public void actionPerformed(ActionEvent e)
   {
     if (e.getSource() == mntmOnline) {
       PersonalMessage topFrame = (PersonalMessage)SwingUtilities.getWindowAncestor(menuBar);
@@ -183,7 +188,16 @@ public class MenuBar implements java.awt.event.ActionListener
         }
         
         Constants.getFriendList().dispose();
-
+        FriendList.list.removeAll();
+        DefaultListModel listModel = (DefaultListModel) FriendList.list.getModel();
+        listModel.removeAllElements();
+        FriendList.list.repaint();
+        loginFrame.username = "";
+        loginFrame.lblEnterYourPdglobal.setText("ENTER YOUR PDGLOBAL USERNAME AND PASSWORD BELOW TO SIGN IN");
+        loginFrame.lblEnterYourPdglobal.setForeground(Color.black);
+        loginFrame.passwordField.setText("");
+        loginFrame.textField.setText("");
+        loginFrame.frmSimSignIn.show();
       }
       else if (e.getSource() == mntmExit) {
         System.exit(0);

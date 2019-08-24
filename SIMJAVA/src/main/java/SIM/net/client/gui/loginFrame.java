@@ -40,21 +40,21 @@ import SIM.net.client.Constants;
 public class loginFrame
 {
 	public static JFrame frmSimSignIn;
-  private JTextField textField;
+  public static JTextField textField;
   public String ret = "";
   public static String authsession = "";
   public static int go = 0;
   public static DefaultListModel<String> listModel = new DefaultListModel<String>();
   public String contacts = "";
   public static String username = "";
+  public static loginFrame window = new loginFrame();
+  public static JPasswordField passwordField;
+  public static JLabel lblEnterYourPdglobal;
   
-
-
   public static void main(String[] args)
   {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
-       loginFrame window = new loginFrame();
     		   frmSimSignIn.setVisible(true);
       }
     });
@@ -84,7 +84,7 @@ public class loginFrame
     frmSimSignIn.getContentPane().add(textField);
     textField.setColumns(10);
     
-    JPasswordField passwordField = new JPasswordField();
+    passwordField = new JPasswordField();
     passwordField.setBounds(15, 426, 384, 26);
     frmSimSignIn.getContentPane().add(passwordField);
     
@@ -116,7 +116,7 @@ public class loginFrame
     lblNewLabel.setBounds(15, 90, 384, 169);
     frmSimSignIn.getContentPane().add(lblNewLabel);
     
-    final JLabel lblEnterYourPdglobal = new JLabel("ENTER YOUR PDGLOBAL USERNAME AND PASSWORD BELOW TO SIGN IN");
+    lblEnterYourPdglobal = new JLabel("ENTER YOUR PDGLOBAL USERNAME AND PASSWORD BELOW TO SIGN IN");
     lblEnterYourPdglobal.setFont(new Font("Times New Roman", 0, 10));
     lblEnterYourPdglobal.setHorizontalAlignment(0);
     lblEnterYourPdglobal.setBounds(15, 16, 384, 46);
