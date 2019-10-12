@@ -69,6 +69,9 @@ public class loginFrame
   }
   
 
+  /**
+	 * @wbp.parser.entryPoint
+	 */
 
   private Window initialize()
   {

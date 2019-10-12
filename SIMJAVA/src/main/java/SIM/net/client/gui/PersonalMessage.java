@@ -114,6 +114,7 @@ public class PersonalMessage extends JFrame
 	private String clientSend;
 	public String[] kfbp;
 
+	
 	public PersonalMessage(Client client) {
 		this.kfbp = new String[10001];
 		for (int i = 0; i < 10001; i++) {
