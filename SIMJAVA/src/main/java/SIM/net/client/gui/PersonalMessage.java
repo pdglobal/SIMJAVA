@@ -360,6 +360,10 @@ public class PersonalMessage extends JFrame
 			}
 			this.chatBox.setText("");
 			System.out.println(send);
+			if (send.equals("Spam Throttle: You're sending messages too fast. You can only send a maximum of 1 message every second")) {
+				JOptionPane.showMessageDialog(null, "Spam Throttle: You're sending messages too fast. You can only send a maximum of 1 message every second",
+						"Message Error", 0);
+			}
 			
 			
 		}
