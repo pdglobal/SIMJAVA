@@ -3,8 +3,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DARTIS"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_221"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/webcam-capture-0.3.10-dist"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.12.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.6.jar"/>
@@ -21,5 +19,9 @@
 	<classpathentry kind="lib" path="lib/jna-platform-5.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/reactive-streams-1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="webcam-capture-0.3.10-dist/webcam-capture-0.3.10.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="webcam-capture-0.3.10-dist/bridj-0.6.2.jar"/>
+	<classpathentry kind="lib" path="webcam-capture-0.3.10-dist/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

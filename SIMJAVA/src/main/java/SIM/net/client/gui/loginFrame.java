@@ -133,20 +133,11 @@ public class loginFrame
         catch (IOException ev) {
           ev.printStackTrace();
         }
-        while ((ret == "") && (loginFrame.go < 10)) {
-          try {
-            Thread.sleep(1000L);
-          }
-          catch (InterruptedException ex) {
-            ex.printStackTrace();
-          }
-          loginFrame.go += 1;
-        }
         
         if (ret == "") {
           lblEnterYourPdglobal.setText("Error connecting to authentication server...");
         }
-        
+        System.out.println(ret);
         if (ret.contains("invalid")) {
           lblEnterYourPdglobal.setText(ret);
           lblEnterYourPdglobal.setForeground(Color.red);
@@ -155,7 +146,6 @@ public class loginFrame
           lblEnterYourPdglobal.setText("Success loggin in, please wait...");
           lblEnterYourPdglobal.setForeground(Color.green);
           loginFrame.authsession = ret;
-          System.out.print(ret);
           Constants.addFriend(new Client(0, password, password, 0, false, false));
           Constants.setFriendList(new FriendList());
           Constants.getFriendList().setVisible(true);
@@ -256,8 +246,9 @@ public class loginFrame
 	          msgtext = crypt.extract(encrypted, Constants.getPM(Integer.parseInt(usrid)).kfbp);
 	        }
 	        final PersonalMessage PM = Constants.getPM(Integer.parseInt(usrid));
-	        if (msgtext.equals("{NUDGE}")) {
+	        if (msgtext.equals("*NUDGE*")) {
 	          PM.toFront();
+	          PM.setSize(450, 450);
 	          Executors.newSingleThreadExecutor().execute(new Runnable()
 	          {
 	            public void run() {
@@ -286,6 +277,7 @@ public class loginFrame
 	                }
 	                rumble++;
 	              }
+	              
 	              
 	            }
 	            
