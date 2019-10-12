@@ -105,7 +105,7 @@ public class PersonalMessage extends JFrame
 	private JButton addButton = new JButton();
 	private JButton transferButton = new JButton();
 	private JLabel statusLabel = new JLabel();
-	private HTMLEditorKit kit = new HTMLEditorKit();
+	private HTMLEditorKit kit = new WrappedHtmlEditorKit();
 	private HTMLDocument doc = new HTMLDocument();
 	private StyleSheet styleSheet = this.kit.getStyleSheet();
 	private boolean shiftDown = false;
@@ -126,32 +126,6 @@ public class PersonalMessage extends JFrame
 
 	
 	public PersonalMessage(Client client) {
-		this.kfbp = new String[10001];
-		for (int i = 0; i < 10001; i++) {
-			this.kfbp[i] = "0";
-		}
-		this.clients.add(client);
-		setIconImage(Constants.mailIcon);
-		this.baseTitle = (client.getScreen_name());
-		setTitle(this.baseTitle + " | PM");
-		setSize(600, 450);
-		setLocationRelativeTo(null);
-		setLayout(null);
-		setResizable(true);
-		setDefaultCloseOperation(2);
-		setJMenuBar(new MenuBar().getMenuBar());
-
-		setMinimumSize(new Dimension(400, 300));
-		setPreferredSize(new Dimension(700, 500));
-		addComponentListener(this);
-		addFocusListener(this);
-		addWindowFocusListener(this);
-		addWindowListener(this);
-		show(true);
-
-		this.log.setBounds(0, 0, 585, 300);
-		this.log.setEditable(false);
-		this.log.setFont(new Font("Arial", 0, 12));
 		this.log.setEditorKit(new HTMLEditorKit(){ 
 	           @Override 
 	           public ViewFactory getViewFactory(){ 
@@ -200,8 +174,36 @@ public class PersonalMessage extends JFrame
 	                }; 
 	            } 
 	        }); 
-		
+		this.kfbp = new String[10001];
+		for (int i = 0; i < 10001; i++) {
+			this.kfbp[i] = "0";
+		}
+		this.clients.add(client);
+		setIconImage(Constants.mailIcon);
+		this.baseTitle = (client.getScreen_name());
+		setTitle(this.baseTitle + " | PM");
+		setSize(600, 450);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		setResizable(true);
+		setDefaultCloseOperation(2);
+		setJMenuBar(new MenuBar().getMenuBar());
+
+		setMinimumSize(new Dimension(400, 300));
+		setPreferredSize(new Dimension(700, 500));
+		addComponentListener(this);
+		addFocusListener(this);
+		addWindowFocusListener(this);
+		addWindowListener(this);
+		show(true);
+
+		this.log.setBounds(0, 0, 585, 300);
+		this.log.setEditable(false);
+		this.log.setFont(new Font("Arial", 0, 12));
+
 		this.styleSheet.addRule("a:link {color:blue}");
+
+		this.log.setEditorKit(this.kit);
 		this.log.setDocument(this.doc);
 		this.log.addHyperlinkListener(this);
 		this.log.setAutoscrolls(false);
