@@ -126,7 +126,7 @@ public class Constants {
 		emotions.add(new Emoticon(":\\|","&nbsp<img src=\"" + Constants.class.getResource("/smileys/what_smile.gif") + "\">&nbsp"));
 		emotions.add(new Emoticon(":'\\(","&nbsp<img src=\"" + Constants.class.getResource("/smileys/cry_smile.gif") + "\">&nbsp"));
 		emotions.add(new Emoticon(":\\$","&nbsp<img src=\"" + Constants.class.getResource("/smileys/red_smile.gif") + "\">&nbsp"));
-		emotions.add(new Emoticon("\\(h\\)","&nbsp<img src=\"" + Constants.class.getResource("/smileys/shades_smile.gif") + "\">&nbsp"));
+		emotions.add(new Emoticon("\\(H\\)","&nbsp<img src=\"" + Constants.class.getResource("/smileys/shades_smile.gif") + "\">&nbsp"));
 		emotions.add(new Emoticon(":@","&nbsp<img src=\"" + Constants.class.getResource("/smileys/angry_smile.gif") + "\">&nbsp"));
 		emotions.add(new Emoticon("\\(a\\)","&nbsp<img src=\"" + Constants.class.getResource("/smileys/angel_smile.gif") + "\">&nbsp"));
 		emotions.add(new Emoticon("\\(6\\)","&nbsp<img src=\"" + Constants.class.getResource("/smileys/devil_smile.gif") + "\">&nbsp"));
