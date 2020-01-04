@@ -217,7 +217,7 @@ public class loginFrame
    return frmSimSignIn;
   }
   
-  String trim(String str, String s)
+  public static String trim(String str, String s)
   {
     String res = s.length() >= str.length() ? str : str == null ? null : s == null ? str : str.replaceFirst(s, "");
     if ((res != null) && (s != null) && (res.length() >= s.length())) {
@@ -242,7 +242,6 @@ public class loginFrame
 	        }
 	        String msgtext = array[1];
 	        if (msgtext.substring(0, 2).toString().equals("0x")) {
-	          System.out.println("Encrypted message inbound");
 	          String encrypted = trim(msgtext, "0x").replace("E ", "E+");
 	          System.out.println(msgtext);
 	          System.out.println(encrypted);

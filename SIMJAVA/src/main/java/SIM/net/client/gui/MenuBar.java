@@ -24,6 +24,7 @@ import SIM.net.client.BrowserLaunch;
 import SIM.net.client.Constants;
 import SIM.net.client.networking.PacketHeaders;
 import SIM.net.client.networking.PacketManager;
+import SIM.net.client.networking.snapshot;
 
 public class MenuBar implements java.awt.event.ActionListener
 {
@@ -31,7 +32,7 @@ public class MenuBar implements java.awt.event.ActionListener
   
   private JMenu mnFile = new JMenu("File");
   private JMenu mnFormat = new JMenu("Settings");
-  private JMenu mnHelp = new JMenu("Help");
+  private JMenu mnHelp = new JMenu("Webcam");
   public JMenu mntmStatus = new JMenu("Encryption");
   
   private JMenuItem mntmOnline = new JMenuItem("Select KFB for this conversation");
@@ -45,8 +46,7 @@ public class MenuBar implements java.awt.event.ActionListener
   private JMenuItem mntmExit = new JMenuItem("Exit");
   private JMenuItem mntmPreferences = new JMenuItem("Preferences");
   public JMenuItem mntmFont = new JMenuItem("Format Font");
-  private JMenuItem mntmAbout = new JMenuItem("About");
-  private JMenuItem mntmWebsite = new JMenuItem("Website");
+  private JMenuItem mntmWebsite = new JMenuItem("Start Webcam Server");
 
 
 
@@ -70,8 +70,6 @@ public class MenuBar implements java.awt.event.ActionListener
     mnFormat.add(mntmPreferences);
     mnFormat.add(mntmFont);
     
-
-    mnHelp.add(mntmAbout);
     mnHelp.add(mntmWebsite);
     
 
@@ -98,7 +96,6 @@ public class MenuBar implements java.awt.event.ActionListener
     mntmExit.addActionListener(this);
     mntmPreferences.addActionListener(this);
     mntmFont.addActionListener(this);
-    mntmAbout.addActionListener(this);
     mntmWebsite.addActionListener(this);
   }
   
@@ -211,20 +208,21 @@ public void actionPerformed(ActionEvent e)
         Constants.getPreferencesGUI().setVisible(true);
 
       }
-      else if (e.getSource() == mntmAbout) {
-        JOptionPane.showMessageDialog(null, "Underground IM, the free Java Instant Messaging solution. Both a client and a \nserver are available. Underground IM is open source software distributed\nfree of charge under the terms of the GNU General Public License.\n\nVersion: " + 
-        
-
-          Constants.getVersion() + "\n" + 
-          "Build Date: " + Constants.getBuildDate() + "\n" + 
-          "Created by: Fsig\n\n" + 
-          "Websites: \n" + 
-          "http://undergroundim.net\n" + 
-          "http://ossietronics.com");
-
-      }
       else if (e.getSource() == mntmWebsite) {
-        BrowserLaunch.openURL("http://undergroundim.net/");
+			if (!snapshot.open) {
+				Thread thread = new Thread() {
+					public void run() {
+						try {
+							snapshot.main(new String[3]);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
+
+				thread.start();
+			}
       }
     }
   }

@@ -75,6 +75,7 @@ import SIM.net.client.FileWriter;
 import SIM.net.client.Timer;
 import SIM.net.client.networking.PacketHeaders;
 import SIM.net.client.networking.PacketManager;
+import SIM.net.client.networking.camview;
 import SIM.net.client.networking.snapshot;
 import java.awt.Dimension; 
 import javax.swing.*; 
@@ -240,7 +241,7 @@ public class PersonalMessage extends JFrame
 
 		this.transferButton.setBounds(getWidth() - 36, 279, 20, 20);
 		this.transferButton.setIcon(Constants.transferIcon);
-		this.transferButton.setToolTipText("Broadcast Webcam");
+		this.transferButton.setToolTipText("View Webcam");
 
 		this.fontButton.addActionListener(this);
 		this.emoticonButton.addActionListener(this);
@@ -534,20 +535,7 @@ public class PersonalMessage extends JFrame
 			}
 		} else if (e.getSource() != this.addButton) {
 			if (e.getSource() == this.transferButton) {
-				if (!snapshot.open) {
-					Thread thread = new Thread() {
-						public void run() {
-							try {
-								snapshot.main(new String[3]);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					};
-
-					thread.start();
-				}
+				camview.camwin(this.baseTitle.split("\\|")[0].toString().trim());
 			}
 		}
 	}

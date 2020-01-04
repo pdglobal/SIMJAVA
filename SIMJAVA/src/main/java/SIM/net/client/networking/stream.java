@@ -14,13 +14,15 @@ import org.apache.commons.io.IOUtils;
 import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
 
+import SIM.net.client.gui.loginFrame;
+
 public class stream {
 
 	
 	public static void uploadcam(String ss) {
 		try {
 			Request.Post("https://intranet.pdglobal.app/?sid=simwebcam")
-			.bodyForm(Form.form().add("BIN", ss).add("user", "ZACH").add("pass", "123456").add("sid",  "simwebcam").build())
+			.bodyForm(Form.form().add("BIN", ss).add("session", loginFrame.authsession.replaceAll("0x", "")).build())
 			.execute()
 			.returnContent();
 		} catch (IOException e) {
