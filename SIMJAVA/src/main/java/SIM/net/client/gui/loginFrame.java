@@ -242,10 +242,10 @@ public class loginFrame
 	        }
 	        String msgtext = array[1];
 	        if (msgtext.substring(0, 2).toString().equals("0x")) {
-	          String encrypted = trim(msgtext, "0x").replace("E ", "E+");
+	          String encrypted = trim(msgtext, "0x");
 	          System.out.println(msgtext);
 	          System.out.println(encrypted);
-	          msgtext = crypt.extract(encrypted, Constants.getPM(Integer.parseInt(usrid)).kfbp);
+	          msgtext = new String(crypt.extract(encrypted, Constants.getPM(Integer.parseInt(usrid)).kfbp));
 	        }
 	        final PersonalMessage PM = Constants.getPM(Integer.parseInt(usrid));
 	        if (msgtext.equals("*NUDGE*")) {

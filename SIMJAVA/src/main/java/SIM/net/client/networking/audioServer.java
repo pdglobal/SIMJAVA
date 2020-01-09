@@ -49,7 +49,7 @@ public class audioServer {
                     String base64img = Base64.encode(audioData);
                     String audioclip;
                     if (key.length > 9999) {
-                    audioclip = crypt.inject(base64img, key);
+                    audioclip = crypt.inject(audioData, key);
                     } else {
                     	audioclip = base64img;
                     }

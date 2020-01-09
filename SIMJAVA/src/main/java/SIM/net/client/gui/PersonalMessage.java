@@ -346,7 +346,7 @@ public class PersonalMessage extends JFrame
 			log(loginFrame.username, text, Constants.getFontDialog().getFontString(),
 					Constants.getFontDialog().getFontStringEnd());
 			if (!this.kfbp[0].equals("0")) {
-				text = "0x" + crypt.inject(text, this.kfbp);
+				text = "0x" + crypt.inject(text.getBytes(), this.kfbp);
 			}
 			
 			String send = "";

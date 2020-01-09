@@ -9,6 +9,8 @@ import SIM.net.client.networking.stream;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -42,7 +44,9 @@ public class snapshot {
 		if (mirror.broadcast) {
 		webcamimg = image;
 		if (encryptcam == true) {
-			stream.uploadcam("0x"+DARTIS.crypt.inject(Base64img.encodeToString(webcamimg, "jpeg"), kfb));
+			byte[] imageBytes = ((DataBufferByte) image.getData().getDataBuffer()).getData();
+			String encimg = DARTIS.crypt.inject(imageBytes, kfb);
+			//stream.uploadcam("0x"+);
 			operations += 1;
 		} else {
 			stream.uploadcam(Base64img.encodeToString(webcamimg, "jpeg"));

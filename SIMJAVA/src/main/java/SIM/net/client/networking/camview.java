@@ -195,8 +195,10 @@ public class camview {
 				if (frame.length() > 2) {
 				if (frame.substring(0, 2).toString().equals("0x")) {
 					if (windowkeys.get(username) != null) {
-					String encrypted = loginFrame.trim(frame, "0x").replace("E ", "E+");
-					frame = crypt.extract(encrypted, windowkeys.get(username));
+					String encrypted = loginFrame.trim(frame, "0x");
+					byte[] byteframe = crypt.extract(encrypted, windowkeys.get(username));
+					
+					frame = Base64img.encodeToString(createImageFromBytes(byteframe), "jpeg");
 					} else {
 						lblNewLabel.setToolTipText("ERROR: STREAM IS ENCRYPTED BUT NO SUITABLE DECRYPTION KEY WAS FOUND");
 						return noimg;
@@ -233,5 +235,12 @@ public class camview {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-
+	private static BufferedImage createImageFromBytes(byte[] imageData) {
+	    ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+	    try {
+	        return ImageIO.read(bais);
+	    } catch (IOException e) {
+	        throw new RuntimeException(e);
+	    }
+	}
 }
