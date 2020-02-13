@@ -4,11 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 public class Base64img {
 	public static String encodeToString(BufferedImage image, String type) {
@@ -19,8 +17,7 @@ public class Base64img {
             ImageIO.write(image, type, bos);
             byte[] imageBytes = bos.toByteArray();
  
-            BASE64Encoder encoder = new BASE64Encoder();
-            imageString = encoder.encode(imageBytes);
+            imageString = Base64.getEncoder().encodeToString(imageBytes);
  
             bos.close();
         } catch (IOException e) {
@@ -34,8 +31,7 @@ public class Base64img {
         BufferedImage image = null;
         byte[] imageByte;
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(imageString);
+            imageByte = Base64.getDecoder().decode(imageString);
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
             bis.close();

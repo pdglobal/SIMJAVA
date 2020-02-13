@@ -182,7 +182,7 @@ public class loginFrame
         	    @Override
         	    public void run() {
         	    	try {
-						//SIM.net.client.networking.audioHandler.main(new String[3]);
+						SIM.net.client.networking.audioServer.main(new String[3]);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
