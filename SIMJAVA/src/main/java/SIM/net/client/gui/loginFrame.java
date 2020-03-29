@@ -2,7 +2,6 @@ package SIM.net.client.gui;
 
 import DARTIS.crypt;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -11,14 +10,13 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
@@ -30,9 +28,17 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.codebrig.beam.connection.ConnectionProtocol;
+import com.codebrig.beam.connection.traversal.upnp.UPNPControl;
+import com.codebrig.beam.connection.traversal.upnp.UPNPException;
+
 import SIM.net.client.AudioPlayer;
 import SIM.net.client.Client;
 import SIM.net.client.Constants;
+import SIM.net.client.networking.PortFinder;
+import SIM.net.client.networking.nodeP2P;
+import control.Peer;
+import net.sbbi.upnp.messages.UPNPResponseException;
 
 
 
@@ -50,12 +56,78 @@ public class loginFrame
   public static loginFrame window = new loginFrame();
   public static JPasswordField passwordField;
   public static JLabel lblEnterYourPdglobal;
+  public static UPNPControl upnpControl;
+  public static int port;
   
   public static void main(String[] args)
   {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
+    	  
+    	  
     		   frmSimSignIn.setVisible(true);
+    		   
+    		   InetAddress ip = null;
+    	          try {
+    	              ip = InetAddress.getLocalHost();
+    	          } catch (UnknownHostException e1) {
+    	        	  
+    	              e1.printStackTrace();
+    	          }
+    	          boolean upnpfound = true;
+    	          
+    	          port = PortFinder.findFreePort(1111,9999);
+					try {
+						upnpControl = new UPNPControl (ConnectionProtocol.TCP);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						System.out.println("Could not find UPNP compatible router!");
+						upnpfound = false;
+					} catch (UPNPException e) {
+						// TODO Auto-generated catch block
+						System.out.println("Could not find UPNP compatible router!");
+						upnpfound = false;
+					}
+					
+					int trys = 0 ;
+			        boolean isopen = false;
+			        if (upnpfound) {
+					try {
+						isopen = upnpControl.addPortMapping("SIMNODE".concat(ip.getHostName()), port, port);
+					} catch (IOException e) {
+						System.out.println("Binding to ".concat(String.valueOf(port)).concat(" failed"));
+					} catch (UPNPResponseException e) {
+						System.out.println("Binding to ".concat(String.valueOf(port)).concat(" failed"));
+					}
+					while(isopen == false && trys < 13) {
+						trys++;
+						port = PortFinder.findFreePort(1111+(trys*10),9999);
+						try {
+							isopen = upnpControl.addPortMapping ("SIMNODE".concat(ip.getHostName()), port, port);
+						} catch (IOException e) {
+							System.out.println("Binding to ".concat(String.valueOf(port)).concat(" failed"));
+						} catch (UPNPResponseException e) {
+							System.out.println("Binding to ".concat(String.valueOf(port)).concat(" failed"));
+						}
+					}
+					
+					if (isopen) {
+						
+					Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+				        public void run() {
+				        	try {
+								upnpControl.removePortMapping(port);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								System.out.println("Unbind to ".concat(String.valueOf(port)).concat(" failed"));
+							} catch (UPNPResponseException e) {
+								// TODO Auto-generated catch block
+								System.out.println("Unbind to ".concat(String.valueOf(port)).concat(" failed"));
+							}
+				        }
+				    }, "Shutdown-thread"));
+					}
+			        }
       }
     });
   }
@@ -99,7 +171,7 @@ public class loginFrame
     lblUsername.setBounds(166, 275, 85, 20);
     frmSimSignIn.getContentPane().add(lblUsername);
     
-    JLabel lblCopyrightProgressive = new JLabel("COPYRIGHT 2013-2019 PROGRESSIVE DYNAMICS GLOBAL LIMITED COMPANY");
+    JLabel lblCopyrightProgressive = new JLabel("COPYRIGHT 2013-2020 PROGRESSIVE DYNAMICS GLOBAL LIMITED COMPANY");
     lblCopyrightProgressive.setHorizontalAlignment(0);
     lblCopyrightProgressive.setFont(new Font("Neo Sans", 0, 12));
     lblCopyrightProgressive.setBounds(0, 599, 414, 20);
@@ -177,18 +249,23 @@ public class loginFrame
           for (String contactData : contacts_array) {
             loginFrame.listModel.addElement(contactData);
             
-          }      
-          Executors.newSingleThreadExecutor().execute(new Runnable() {
-        	    @Override
-        	    public void run() {
-        	    	try {
-						SIM.net.client.networking.audioServer.main(new String[3]);
-					} catch (Exception e) {
+          }
+          
+          //P2P Initialization
+          nodeP2P node = new nodeP2P(textField.getText(), port, "0.0.0.0");
+          System.out.println(node.me.ip);
+         
+      //    Executors.newSingleThreadExecutor().execute(new Runnable() {
+     //   	    @Override
+      //  	    public void run() {
+        	    	//try {
+						//SIM.net.client.networking.audioServer.main(new String[3]);
+					//} catch (Exception e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        	    }
-        	});
+				//		e.printStackTrace();
+					//}
+        	   // }
+        //	});
           
           Executors.newSingleThreadExecutor().execute(new Runnable()
           {
@@ -216,6 +293,7 @@ public class loginFrame
     frmSimSignIn.getContentPane().add(btnSignIn);
    return frmSimSignIn;
   }
+  
   
   public static String trim(String str, String s)
   {
