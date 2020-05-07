@@ -55,8 +55,7 @@ public class nodeP2P {
 			        br= new BufferedReader(new InputStreamReader(System.in));
 			        is=new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
 			        os= new PrintWriter(this.socket.getOutputStream());
-			        senddata("HANDSHAKE;".concat(this.username).concat(";").concat(this.ip).concat(";").concat(String.valueOf(this.port)));
-			    }
+			        }
 				catch (IOException e){
 			       this.socket = null;
 			       System.out.println("ERROR CONNECTING TO PEER: ALREADY CONNECTED");
@@ -94,6 +93,7 @@ public class nodeP2P {
 						            }
 						            // new thread for a client
 						            new P2PThread(socket, peers).start();
+						            
 						        }
 						    }
 						  };
@@ -126,6 +126,7 @@ public class nodeP2P {
 		            return;
 		        }
 		        String line;
+		        System.out.println("Connected to peer: ".concat(socket.getInetAddress().getHostAddress()));
 		        while (true) {
 		            try {
 		                line = brinp.readLine();
@@ -135,7 +136,7 @@ public class nodeP2P {
 		                	String[] lineData = line.split(";");
 		                    if (lineData[0].equals("HANDSHAKE")) {
 		                    	peers.put(lineData[1], new peer(lineData[1], socket.getInetAddress().getHostAddress(), socket.getPort(), socket));
-		                    System.out.println("Connected to peer: ".concat(lineData[1]));
+		                    	System.out.println("PEER @ ".concat(socket.getInetAddress().getHostAddress()).concat(":").concat(String.valueOf(socket.getPort())).concat(" IDENTIFIED AS USER ").concat(lineData[1]));
 		                    }
 		                    if (lineData[0].equals("QUIT")) {
 		                    	peers.remove(lineData[1]);

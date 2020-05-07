@@ -254,6 +254,9 @@ public class loginFrame
           //P2P Initialization
           nodeP2P node = new nodeP2P(textField.getText(), port, "0.0.0.0");
           System.out.println(node.me.ip);
+          //node.client.connect("zach", "10.0.0.254", 1111);
+          //node.client.getPeer("zach").senddata("HANDSHAKE;DESTINY;10.0.0.13");
+          node.me.senddata("HANDSHAKE;".concat(textField.getText()).concat(";127.0.0.1"));
          
       //    Executors.newSingleThreadExecutor().execute(new Runnable() {
      //   	    @Override
