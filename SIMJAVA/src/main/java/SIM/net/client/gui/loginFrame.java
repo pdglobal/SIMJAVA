@@ -257,6 +257,7 @@ public class loginFrame
           //node.client.connect("zach", "10.0.0.254", 1111);
           //node.client.getPeer("zach").ident();
           node.me.ident();
+          node.client.getPeer(node.me.username).sendmsg("Hello World");
          
       //    Executors.newSingleThreadExecutor().execute(new Runnable() {
      //   	    @Override

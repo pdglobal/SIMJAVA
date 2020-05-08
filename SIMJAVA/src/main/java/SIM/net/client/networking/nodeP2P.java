@@ -46,9 +46,12 @@ public class nodeP2P {
 
 		    public void sendmsg(String message) {
 		    	if (client.getPeer(username)== null) {
+		    		//get peer data from https endpoint
+		    		//attempt to connect directly
+		    		//if fail try broadcast
 		    		server.broadcast(message);
 		    	} else {
-		    		client.getPeer(username).senddata("BROADCAST;".concat(me.username).concat(";").concat(message));
+		    		client.getPeer(username).senddata("BROADCAST;".concat("MESSAGETOKEN;").concat(me.username).concat(";").concat(message));
 		    	}
 		    }
 		    
@@ -89,7 +92,7 @@ public class nodeP2P {
 	        
 	        public void broadcast(String message) {
 	        for (Map.Entry<String,peer> entry : peers.entrySet())  {
-	    		entry.getValue().senddata("BROADCAST;".concat(me.username).concat(";").concat(message));
+	    		entry.getValue().senddata("BROADCAST;".concat("MESSAGETOKEN;").concat(me.username).concat(";").concat(message));
 	    	} 
 	        }
 	        
@@ -166,6 +169,7 @@ public class nodeP2P {
 		                    		//check if for me, if not, check peers
 		                    		//check peers, if peer found, send DIRECT
 		                    		//if peer not found re-broadcast
+		                    		System.out.println("PEER @ ".concat(socket.getInetAddress().getHostAddress()).concat(":").concat(String.valueOf(socket.getPort())).concat("[").concat(lineData[2]).concat("]").concat("SENT MESSGAE '").concat(lineData[3]).concat("' USING TOKEN ").concat(lineData[1]));
 		                    		bcastStore.put(bhash, lineData[1].concat(lineData[2]));
 		                    	}
 		                    	
