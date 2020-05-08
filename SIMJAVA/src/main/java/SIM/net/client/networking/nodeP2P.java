@@ -48,7 +48,7 @@ public class nodeP2P {
 		    	if (client.getPeer(username)== null) {
 		    		server.broadcast(message);
 		    	} else {
-		    		client.getPeer(username).senddata("DIRECT;".concat(me.username).concat(";").concat(message));
+		    		client.getPeer(username).senddata("BROADCAST;".concat(me.username).concat(";").concat(message));
 		    	}
 		    }
 		    
