@@ -40,7 +40,9 @@ public class nodeP2P {
 		    PrintWriter os=null;
 
 		    
-		    
+		    public void ident() {
+		    	this.senddata("HANDSHAKE;".concat(me.username).concat(";").concat(me.ip));
+		    }
 
 			public peer(String username, String ip, int port, Socket socket) {
 				this.username = username;
