@@ -169,6 +169,7 @@ public class nodeP2P {
 		                    		//check if for me, if not, check peers
 		                    		//check peers, if peer found, send DIRECT
 		                    		//if peer not found re-broadcast
+		                    		//if for me verify message against https endpoint
 		                    		System.out.println("PEER @ ".concat(socket.getInetAddress().getHostAddress()).concat(":").concat(String.valueOf(socket.getPort())).concat("[").concat(lineData[2]).concat("]").concat("SENT MESSGAE '").concat(lineData[3]).concat("' USING TOKEN ").concat(lineData[1]));
 		                    		bcastStore.put(bhash, lineData[1].concat(lineData[2]));
 		                    	}
