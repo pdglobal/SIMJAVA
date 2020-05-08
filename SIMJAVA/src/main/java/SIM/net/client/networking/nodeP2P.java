@@ -44,6 +44,14 @@ public class nodeP2P {
 		    	this.senddata("HANDSHAKE;".concat(me.username).concat(";").concat(me.ip));
 		    }
 
+		    public void sendmsg(String message) {
+		    	if (client.getPeer(username)== null) {
+		    		server.broadcast(message);
+		    	} else {
+		    		client.getPeer(username).senddata("DIRECT;".concat(me.username).concat(";").concat(message));
+		    	}
+		    }
+		    
 			public peer(String username, String ip, int port, Socket socket) {
 				this.username = username;
 				this.ip = ip;
@@ -78,6 +86,12 @@ public class nodeP2P {
 			String username;
 			ServerSocket serversocket;
 	        Socket socket;
+	        
+	        public void broadcast(String message) {
+	        for (Map.Entry<String,peer> entry : peers.entrySet())  {
+	    		entry.getValue().senddata("BROADCAST;".concat(me.username).concat(";").concat(message));
+	    	} 
+	        }
 	        
 			public server(String username, String bindIP, int port) {
 				this.port = port;
@@ -149,21 +163,14 @@ public class nodeP2P {
 		                    	String bhash = getMd5(lineData[1].concat(lineData[2]));
 		                    	if (!bcastStore.containsKey(bhash)) {
 		                    		//we have received a new broadcast
+		                    		//check if for me, if not, check peers
 		                    		//check peers, if peer found, send DIRECT
 		                    		//if peer not found re-broadcast
 		                    		bcastStore.put(bhash, lineData[1].concat(lineData[2]));
 		                    	}
 		                    	
 		                    }
-		                    if (lineData[0].equals("DIRECT")) {
-		                    	String bhash = getMd5(lineData[1].concat(lineData[2]));
-		                    	if (!bcastStore.containsKey(bhash)) {
-		                    		//we have received a new direct message
-		                    		//add it to the window
-		                    		bcastStore.put(bhash, lineData[1].concat(lineData[2]));
-		                    	}
-		                    	
-		                    }
+		                    
 		                    
 		                }
 		            } catch (IOException e) {
