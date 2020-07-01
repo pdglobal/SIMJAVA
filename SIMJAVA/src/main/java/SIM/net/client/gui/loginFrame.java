@@ -178,17 +178,17 @@ public class loginFrame
             loginFrame.listModel.addElement(contactData);
             
           }      
-          Executors.newSingleThreadExecutor().execute(new Runnable() {
-        	    @Override
-        	    public void run() {
-        	    	try {
-						SIM.net.client.networking.audioServer.main(new String[3]);
-					} catch (Exception e) {
+         // Executors.newSingleThreadExecutor().execute(new Runnable() {
+        	//    @Override
+        	  //  public void run() {
+        	    //	try {
+				//		SIM.net.client.networking.audioServer.main(new String[3]);
+				//	} catch (Exception e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        	    }
-        	});
+						//e.printStackTrace();
+				//	}
+        	   // }
+        //	});
           
           Executors.newSingleThreadExecutor().execute(new Runnable()
           {
