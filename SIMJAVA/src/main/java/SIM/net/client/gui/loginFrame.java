@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import SIM.net.client.AudioPlayer;
 import SIM.net.client.Client;
 import SIM.net.client.Constants;
+import javax.swing.SwingConstants;
 
 
 
@@ -48,8 +49,17 @@ public class loginFrame
   public String contacts = "";
   public static String username = "";
   public static loginFrame window = new loginFrame();
+ 
   public static JPasswordField passwordField;
   public static JLabel lblEnterYourPdglobal;
+  private JTextField textField_1;
+  private JTextField textField_2;
+  private JTextField textField_3;
+  private JLabel lblNewLabel_1;
+  private JLabel lblNewLabel_2;
+  private JLabel lblNewLabel_3;
+  private JLabel lblNewLabel_4;
+  private JLabel lblNewLabel_5;
   
   public static void main(String[] args)
   {
@@ -76,33 +86,29 @@ public class loginFrame
   private Window initialize()
   {
 	frmSimSignIn = new JFrame();
-    frmSimSignIn.setTitle("SIM SIGN IN WINDOW");
+    frmSimSignIn.setTitle("SECURE INSTANT MESSENGER - SIGN IN");
     frmSimSignIn.getContentPane().setBackground(Color.WHITE);
     frmSimSignIn.setBackground(Color.WHITE);
-    frmSimSignIn.setBounds(100, 100, 436, 675);
+    frmSimSignIn.setBounds(100, 100, 725, 278);
     frmSimSignIn.setDefaultCloseOperation(3);
     frmSimSignIn.getContentPane().setLayout(null);
     textField = new JTextField();
-    textField.setBounds(15, 325, 384, 26);
+    textField.setHorizontalAlignment(SwingConstants.CENTER);
+    textField.setToolTipText("USERNAME");
+    textField.setBounds(285, 70, 384, 26);
     frmSimSignIn.getContentPane().add(textField);
     textField.setColumns(10);
     
     passwordField = new JPasswordField();
-    passwordField.setBounds(15, 426, 384, 26);
+    passwordField.setHorizontalAlignment(SwingConstants.CENTER);
+    passwordField.setToolTipText("PASSWORD");
+    passwordField.setBounds(285, 121, 384, 26);
     frmSimSignIn.getContentPane().add(passwordField);
-    
-    JLabel lblPassword = new JLabel("PASSWORD");
-    lblPassword.setBounds(166, 390, 85, 20);
-    frmSimSignIn.getContentPane().add(lblPassword);
-    
-    JLabel lblUsername = new JLabel("USERNAME");
-    lblUsername.setBounds(166, 275, 85, 20);
-    frmSimSignIn.getContentPane().add(lblUsername);
     
     JLabel lblCopyrightProgressive = new JLabel("COPYRIGHT 2013-2019 PROGRESSIVE DYNAMICS GLOBAL LIMITED COMPANY");
     lblCopyrightProgressive.setHorizontalAlignment(0);
     lblCopyrightProgressive.setFont(new Font("Neo Sans", 0, 12));
-    lblCopyrightProgressive.setBounds(0, 599, 414, 20);
+    lblCopyrightProgressive.setBounds(0, 219, 709, 20);
     frmSimSignIn.getContentPane().add(lblCopyrightProgressive);
     
     Image image = null;
@@ -112,17 +118,11 @@ public class loginFrame
     } catch (IOException e) {
     	e.printStackTrace();
     }
-
-    JLabel lblNewLabel = new JLabel(new ImageIcon(image), JLabel.CENTER);
-
-  
-    lblNewLabel.setBounds(15, 90, 384, 169);
-    frmSimSignIn.getContentPane().add(lblNewLabel);
     
-    lblEnterYourPdglobal = new JLabel("ENTER YOUR PDGLOBAL USERNAME AND PASSWORD BELOW TO SIGN IN");
-    lblEnterYourPdglobal.setFont(new Font("Times New Roman", 0, 10));
+    lblEnterYourPdglobal = new JLabel("");
+    lblEnterYourPdglobal.setFont(new Font("Times New Roman", Font.PLAIN, 18));
     lblEnterYourPdglobal.setHorizontalAlignment(0);
-    lblEnterYourPdglobal.setBounds(15, 16, 384, 46);
+    lblEnterYourPdglobal.setBounds(0, 0, 709, 34);
     frmSimSignIn.getContentPane().add(lblEnterYourPdglobal);
     
     JButton btnSignIn = new JButton("SIGN IN");
@@ -130,23 +130,32 @@ public class loginFrame
       public void actionPerformed(ActionEvent e) {
         loginFrame.username = textField.getText();
         String password = passwordField.getText();
-        try {
-          ret = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=login&usr=" + URLEncoder.encode(loginFrame.username, "UTF-8").trim() + "&pwd=" + URLEncoder.encode(password, "UTF-8").trim());
-        }
-        catch (IOException ev) {
-          ev.printStackTrace();
-        }
+        String[] mfapassword = {"", "", ""};
+        mfapassword[0] = textField_2.getText();
+		 mfapassword[1] = textField_3.getText();
+		 mfapassword[2] = textField_1.getText();
+
+		 try {
+	          ret = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=login&google2fa=" + mfapassword[2] + "&phone2fa=" + mfapassword[0] + "&email2fa=" + mfapassword[1] + "&usr=" + URLEncoder.encode(loginFrame.username, "UTF-8").trim() + "&pwd=" + URLEncoder.encode(password, "UTF-8").trim());
+	        }
+	        catch (IOException ev) {
+	          ev.printStackTrace();
+	        }
         
         if (ret == "") {
-          lblEnterYourPdglobal.setText("Error connecting to authentication server...");
+          lblEnterYourPdglobal.setText("ERROR CONNECTING TO AUTHENTICATION SERVER...");
         }
         System.out.println(ret);
-        if (ret.contains("invalid")) {
+        if (ret.contains("invalid") || ret.contains("code")) {
           lblEnterYourPdglobal.setText(ret);
           lblEnterYourPdglobal.setForeground(Color.red);
         } else {
+        
+        		
+        		 
+        	
           loginFrame.go = 1;
-          lblEnterYourPdglobal.setText("Success loggin in, please wait...");
+          lblEnterYourPdglobal.setText("LOG IN AUTHORIZED, PLEASE WAIT...");
           lblEnterYourPdglobal.setForeground(Color.green);
           loginFrame.authsession = ret;
           Constants.addFriend(new Client(0, password, password, 0, false, false));
@@ -212,8 +221,54 @@ public class loginFrame
         }
       }
     });
-    btnSignIn.setBounds(140, 501, 156, 29);
+    btnSignIn.setBounds(285, 179, 384, 29);
     frmSimSignIn.getContentPane().add(btnSignIn);
+    
+    textField_1 = new JTextField();
+    textField_1.setToolTipText("        \t\t mfapassword[0] = \"\";        \t\t mfapassword[0] = \"\";");
+    textField_1.setColumns(10);
+    textField_1.setBounds(10, 124, 86, 20);
+    frmSimSignIn.getContentPane().add(textField_1);
+    
+    textField_2 = new JTextField();
+    textField_2.setToolTipText("        \t\t mfapassword[0] = \"\";        \t\t mfapassword[0] = \"\";");
+    textField_2.setColumns(10);
+    textField_2.setBounds(10, 167, 86, 20);
+    frmSimSignIn.getContentPane().add(textField_2);
+    
+    textField_3 = new JTextField();
+    textField_3.setToolTipText("        \t\t mfapassword[0] = \"\";        \t\t mfapassword[0] = \"\";");
+    textField_3.setColumns(10);
+    textField_3.setBounds(10, 208, 86, 20);
+    frmSimSignIn.getContentPane().add(textField_3);
+            
+            lblNewLabel_1 = new JLabel("AUTH CODE");
+            lblNewLabel_1.setBounds(10, 107, 86, 14);
+            frmSimSignIn.getContentPane().add(lblNewLabel_1);
+            
+                JLabel lblNewLabel = new JLabel(new ImageIcon(image), JLabel.CENTER);
+                
+                  
+                    lblNewLabel.setBounds(-21, 11, 384, 169);
+                    frmSimSignIn.getContentPane().add(lblNewLabel);
+                    
+                    lblNewLabel_2 = new JLabel("SMS CODE");
+                    lblNewLabel_2.setBounds(10, 152, 86, 14);
+                    frmSimSignIn.getContentPane().add(lblNewLabel_2);
+                    
+                    lblNewLabel_3 = new JLabel("EMAIL CODE");
+                    lblNewLabel_3.setBounds(10, 194, 86, 14);
+                    frmSimSignIn.getContentPane().add(lblNewLabel_3);
+                    
+                    lblNewLabel_4 = new JLabel("PDGLOBAL.APP USERNAME");
+                    lblNewLabel_4.setHorizontalAlignment(SwingConstants.TRAILING);
+                    lblNewLabel_4.setBounds(488, 55, 181, 14);
+                    frmSimSignIn.getContentPane().add(lblNewLabel_4);
+                    
+                    lblNewLabel_5 = new JLabel("PASSWORD");
+                    lblNewLabel_5.setHorizontalAlignment(SwingConstants.TRAILING);
+                    lblNewLabel_5.setBounds(583, 107, 86, 14);
+                    frmSimSignIn.getContentPane().add(lblNewLabel_5);
    return frmSimSignIn;
   }
   
