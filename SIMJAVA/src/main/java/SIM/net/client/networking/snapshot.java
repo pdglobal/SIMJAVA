@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -43,10 +44,9 @@ public class snapshot {
 		// save image to memory
 		if (mirror.broadcast) {
 		webcamimg = image;
-		if (encryptcam == true) {
-			byte[] imageBytes = ((DataBufferByte) image.getData().getDataBuffer()).getData();
-			String encimg = DARTIS.crypt.inject(imageBytes, kfb);
-			//stream.uploadcam("0x"+);
+		if (encryptcam == true) {				 
+			String encimg = DARTIS.crypt.inject(Base64img.encodeToString(webcamimg, "jpeg").getBytes(), kfb);
+			stream.uploadcam("0x"+encimg);
 			operations += 1;
 		} else {
 			stream.uploadcam(Base64img.encodeToString(webcamimg, "jpeg"));

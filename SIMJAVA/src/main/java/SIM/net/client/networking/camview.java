@@ -1,6 +1,7 @@
 package SIM.net.client.networking;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -192,13 +193,14 @@ public class camview {
 				frame = URLSrc.getURLSource("https://intranet.pdglobal.app/?sid=getframe&user=" + username + "&session="
 						+ loginFrame.authsession.replaceAll("0x", ""));
 				System.out.println(frame);
+				BufferedImage image = null;
 				if (frame.length() > 2) {
+					System.out.println(frame);
 				if (frame.substring(0, 2).toString().equals("0x")) {
 					if (windowkeys.get(username) != null) {
 					String encrypted = loginFrame.trim(frame, "0x");
 					byte[] byteframe = crypt.extract(encrypted, windowkeys.get(username));
-					
-					frame = Base64img.encodeToString(createImageFromBytes(byteframe), "jpeg");
+					frame = new String(byteframe);
 					} else {
 						lblNewLabel.setToolTipText("ERROR: STREAM IS ENCRYPTED BUT NO SUITABLE DECRYPTION KEY WAS FOUND");
 						return noimg;
@@ -208,7 +210,9 @@ public class camview {
 					lblNewLabel.setToolTipText("ERROR: STREAM DATA IS CORRUPTED OR INCOMPLETE");
 					return noimg;
 				}
-				BufferedImage frametest = Base64img.decodeToImage(frame);
+				BufferedImage frametest = null;
+				frametest = Base64img.decodeToImage(frame);
+				
 				if (frametest == null) {
 					lblNewLabel.setToolTipText("ERROR: STREAM IS ENCRYPTED BUT NO SUITABLE DECRYPTION KEY WAS FOUND");
 					return noimg;
